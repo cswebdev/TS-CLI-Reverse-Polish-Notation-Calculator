@@ -9,7 +9,6 @@ import * as readline from 'readline';
 // create a command to quit the program (done)
 // create a command to start the calculator
 
-
 // Bug Fix List
 // Troubleshoot error when quitting application 
 
@@ -18,8 +17,8 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-function userInput(query: string): Promise<string> {
-    return new Promise(resolve => rl.question(query, resolve));
+export function userInput(query: string): Promise<string> {
+    return new Promise(resolve => rl.question(query, input => resolve(input.trim().toLowerCase())));
 }
 
 type CommandInput = (input: string) => Promise<boolean>;
@@ -37,17 +36,18 @@ const inputCommands: Commands = {
 };
 
 async function handleHelp(input: string): Promise<boolean> {
-    console.log(`\n ----- COMMANDS ----- \n` +
-    `h or help: Shows the help page \n` +
-    `q or quit: Quit the calculator \n` +
-    `b or back: Back to main menu`
+    console.log(
+        `\n ----- COMMANDS ----- \n` +
+        `h or help: Shows the help page \n` +
+        `q or quit: Quit the calculator \n` +
+        `b or back: Back to main menu`
     );
     return false;
 }
 
 async function handleQuit(input: string): Promise<boolean> {
     const confirmQuit = await userInput('Do you want to quit? Enter "y" or "n": ');
-    if (confirmQuit.toLowerCase() === 'y') {
+    if (confirmQuit === 'y') {
         console.log('Shutting down.');
         rl.close();
         return true;
@@ -56,54 +56,66 @@ async function handleQuit(input: string): Promise<boolean> {
 }
 
 async function handleBack(input: string): Promise<boolean> {
+    console.clear();
     return true; 
 }
 
-async function mainMenu() {
+async function handleUserInput(input: string): Promise<boolean> {
+    if (input in inputCommands) {
+        return await inputCommands[input](input);
+    } else {
+        console.log('You entered an invalid command.');
+        return false;
+    }
+}
+
+async function mainMenu(): Promise<boolean> {
     while (true) {
-        const input = await userInput('\n ----- MAIN MENU ----- \n \n' +
+        const input = await userInput(
+            '\n ----- MAIN MENU ----- \n \n' +
             `Input: `
         );
         console.log(`You entered: ${input}`);
 
-        if (input in inputCommands) {
-            const shouldQuit = await inputCommands[input](input);
-            if (shouldQuit) {
-                break;
-            }
-        } else {
-            console.log('You entered an invalid command.');
+        const shouldQuit = await handleUserInput(input);
+        if (shouldQuit) {
+            return true; 
+        } else if (input === 'help' || input === 'h') {
+            return false; 
         }
     }
 }
 
-async function helpMenu() {
+async function helpMenu(): Promise<void> {
     while (true) {
-        const input = await userInput('\n Enter a command: \n ');
+        const input = await userInput('Input: ');
         console.log(`You entered: ${input}`);
 
         if (input === 'back') {
             return; 
-        } else if (input in inputCommands) {
-            const shouldQuit = await inputCommands[input](input);
-            if (shouldQuit) {
-                return;
-            }
-        } else {
-            console.log('You entered an unrecognized command.');
+        }
+
+        const shouldQuit = await handleUserInput(input);
+        if (shouldQuit) {
+            process.exit(); 
         }
     }
 }
 
 async function main() {
-    console.log(`\n Welcome to the Reverse Polish Notation Calculator \n` +
-    `-------------------------- \n` +
-    `Basic commands \n \n` +
-    `Enter start to begin calculating \n` +
-    `Enter help for the help menu`)
-    
+    console.log(
+        `\n Welcome to the Reverse Polish Notation Calculator \n` +
+        `-------------------------- \n` +
+        `Basic commands \n \n` +
+        `Enter start to begin calculating \n` +
+        `Enter help for the help menu`
+    );
+
     while (true) {
-        await mainMenu();
+        const shouldQuit = await mainMenu();
+        if (shouldQuit) {
+            break;
+        }
         await helpMenu();
     }
 }

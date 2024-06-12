@@ -1,6 +1,3 @@
-type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
-
-
 // create a function that takes in a string input that is in polish notation format
 // define operators in an array? 
 // iterate through input array & check for operators
@@ -9,7 +6,8 @@ type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 
 function calculate(){
     //logic for calculator
+    const inputExpression = await userInput("Please enter a Mathmatical expression \n")
 
 }
 
-export {calculate, Operator}
+export {calculate}
