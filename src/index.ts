@@ -68,15 +68,16 @@ async function handleBack(input: string): Promise<boolean> {
 }
 
 async function startCalculator(): Promise<boolean> {
+    const stack: number[] = [];
+    let tokenArr: string[] = [];
+    let input: string;
+
     console.log(
+        
         '\n' +
         'Starting calculator...\n' +
         '------------------------\n'
     );
-
-    const stack: number[] = [];
-    let tokenArr: string[] = [];
-    let input: string;
 
     do {
         console.log('Please enter a mathematical expression in Reverse Polish Notation format');
@@ -86,6 +87,14 @@ async function startCalculator(): Promise<boolean> {
             console.log('\n Initial Expression: ', userInput);
             console.log('Initial Stack:', stack);
             continue; 
+        }
+
+        if (input in inputCommands) {
+            const shouldQuit = await inputCommands[input](input);
+            if (shouldQuit) {
+                return true;
+            }
+            continue;
         }
 
         tokenArr = input.split(" ").filter((item) => item.trim() !== "");
@@ -161,6 +170,8 @@ async function main() {
         }
         await helpMenu();
     }
+    rl.close();
 }
 
 main().catch(error => console.error(error));
+export {inputCommands}

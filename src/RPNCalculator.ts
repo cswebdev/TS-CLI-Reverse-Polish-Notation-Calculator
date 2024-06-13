@@ -1,4 +1,4 @@
-import { userInput } from "./index";
+import { userInput, inputCommands } from "./index";
 import { isOperator, operatorFunctions } from './operations';
 
 // Create a function that takes in a string input that is in polish notation format
@@ -32,7 +32,7 @@ export default async function calculate(
 
     for (let i = 0; i < tokenArr.length; i++) {
         const item = tokenArr[i];
-        console.log(`step number: ${i + 1}`)
+        console.log(`\n step: ${i + 1}`)
         if (isOperator(item)) {
             const lastNumber = stack.pop();
             const secondLastNumber = stack.pop();
@@ -59,7 +59,7 @@ export default async function calculate(
             }
         }
 
-        console.log(`Stack: ${JSON.stringify(stack)} \n`);
+        console.log(`Stack: ${JSON.stringify(stack)}`);
     }
 
     if (stack.length !== 1) {
@@ -69,12 +69,14 @@ export default async function calculate(
                 const secondLastNumber = stack.pop();
                 const result = operatorFunctions['+'](secondLastNumber || 0, lastNumber || 0);
                 stack.push(result);
-                console.log('\n Final Stack:', stack);
+                // console.log('\n Final Stack:' );
                 }
                 } else {
                     throw new Error("Invalid RPN expression: too many numbers left on the stack");
         }
     }
+    console.log('\n Final Stack:', stack);
     console.log(`Calculation result: ${stack[0]}`);
+
     return stack[0];
 }
