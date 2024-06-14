@@ -59,7 +59,7 @@ async function handleClear(): Promise<boolean>{
     return false;
 }
 
-async function handleHelp(input: string): Promise<boolean> {
+export async function handleHelp(input: string): Promise<boolean> {
     console.log(
     `        
     +---------------+-------------------------+
@@ -75,7 +75,7 @@ async function handleHelp(input: string): Promise<boolean> {
     return false;
 }
 
-async function handleQuit(input: string): Promise<boolean> {
+export async function handleQuit(input: string): Promise<boolean> {
     const confirmQuit = await userInput('Do you want to quit? Enter "y" or "n": ');
     if (confirmQuit === 'y') {
         console.log('Shutting down.');
@@ -85,7 +85,7 @@ async function handleQuit(input: string): Promise<boolean> {
     return false;
     }
     
-async function handleBack(input: string): Promise<boolean> {
+export async function handleBack(input: string): Promise<boolean> {
     const animation = await loadingAnimation('Returning...', undefined, 100);
 
     await new Promise(resolve => setTimeout(resolve, 2000)); 
@@ -124,7 +124,7 @@ async function enterNewProblem():Promise<boolean>{
      return false
  }
 
-async function startCalculator(): Promise<boolean> {
+export async function startCalculator(): Promise<boolean> {
     const stack: number[] = [];
     let tokenArr: string[] = [];
     let input: string;
@@ -135,6 +135,9 @@ async function startCalculator(): Promise<boolean> {
 
     clearInterval(animation);
     clear();
+
+    const isTestEnv = process.env.NODE_ENV === 'test';
+
 
     do {
         console.log(
@@ -168,7 +171,10 @@ async function startCalculator(): Promise<boolean> {
         } catch (error) {
             console.error('Error occurred during calculation:', error);
         }
+
+        if (isTestEnv) break;
     } while (true);
+    return true;
 }
 
 async function mainMenu(): Promise<boolean> {
@@ -188,7 +194,6 @@ async function mainMenu(): Promise<boolean> {
             console.log("")
         }else{
             console.log(`Invalid Command`);
-            // await handleHelp(input);
         }
         
         if (input === 'start') {
@@ -197,7 +202,7 @@ async function mainMenu(): Promise<boolean> {
     }
 }
 
-async function calculatorMenu(): Promise<void> {
+export async function calculatorMenu(): Promise<void> {
     while (true) {
         const input = await userInput('Enter a mathematical expression: ');
         if (input.toLowerCase() === 'back') {
@@ -258,4 +263,4 @@ By Chelsea Snider
 }
 
 main().catch(error => console.error(error));
-export {inputCommands}
+export { inputCommands, handleClear };
