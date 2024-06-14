@@ -2,15 +2,6 @@ import * as readline from 'readline';
 import calculate from './RPNCalculator';
 import { clear } from 'console';
 
-// Task List:
-// set up CLI interface (done)
-// create prompt for input (done)
-// test input and return it (done)
-// create a help command (done)
-// create a help menu (done)
-// create a command to quit the program (done)
-// create a command to start the calculator (done)
-
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -116,7 +107,7 @@ async function enterNewProblem():Promise<boolean>{
 
     const confirmNewProblem = await userInput("would you like to solve another problem? \n" +
         "Enter a command, or enter 'yes' \n" +
-        "input: " 
+        "Enter a command: " 
     );
     if (confirmNewProblem.trim().toLowerCase() === 'yes') {
         await startCalculator();
@@ -183,9 +174,9 @@ async function startCalculator(): Promise<boolean> {
 async function mainMenu(): Promise<boolean> {
     while (true) {
         const input = await userInput(
-            '\n----- MAIN MENU -----\n' +
+    
             '\n' +
-            'Input: '
+            'Enter a command: '
         );
 
         const isCommandValid = await handleUserInput(input);
@@ -244,12 +235,13 @@ async function main() {
 |   | . |  _| .'|  _| | . |   |  |  _| .'| |  _| | | | .'|  _| . |  _|
 |_|_|___|_| |__,|_| |_|___|_|_|  |___|__,|_|___|___|_|__,|_| |___|_|
 
+
 Version 1.0
 By Chelsea Snider
 
-        ` +
-        `-------------------------------------------------\n` +
-        `\n` +
+` +
+'-----------------------------------------------------\n' +
+'\n' +
         `Basic commands\n\n` +
         `Enter 'start' to initialize the calculator\n` +
         `Enter 'help' for the help menu`

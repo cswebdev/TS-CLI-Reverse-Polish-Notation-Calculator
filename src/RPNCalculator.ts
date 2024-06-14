@@ -1,14 +1,6 @@
 import { userInput, inputCommands } from "./index";
 import { isOperator, operatorFunctions } from './operations';
 
-// Create a function that takes in a string input that is in polish notation format
-// Split expression by " " (done)
-// Define operators in an array? (done)
-// Iterate through input array & check for operators (done)
-// For each element -- index in the input array check if it's an operator or an operand (done)
-// verify if the expression is in the correct format (done)
-
-
 // Stacks numbers into the passed stack array and performs the calculation.
 // The token array must be validated before.
 // Return the stack.
