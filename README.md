@@ -37,7 +37,7 @@ By Chelsea Snider
 
 <ul>
   <li><strong>Basic Operators:</strong> In this version, I have limited the calculator to the basic four operators. This decision was made to ensure a stable and functional initial release. Future updates will include more complex operators and functions.</li>
-  <li><strong>Single Interface:</strong> Currently, the application only supports CLI. HoIver, I have designed the code with future scalability in mind, allowing for the addition of WebSocket, file, or TCP socket interfaces.</li>
+  <li><strong>Single Interface:</strong> Currently, the application only supports CLI. However, I have designed the code with future scalability in mind, allowing for the addition of WebSocket, file, or TCP socket interfaces.</li>
   <li><strong>Error Handling:</strong> While basic error handling is implemented, more comprehensive validation and user feedback mechanisms will be introduced in future updates.</li>
 </ul>
 
@@ -74,7 +74,7 @@ cd TS-CLI-Reverse-Polish-Notation-Calculator
 
 <h3>Usage</h3>
 
-<p>Upon running the application, you will be greeted with a Ilcome message and instructions for using the calculator. Enter mathematical expressions in Reverse Polish Notation to receive the computed result. Use the following commands for additional functionality:</p>
+<p>Upon running the application, you will be greeted with a welcome message and instructions for using the calculator. Enter mathematical expressions in Reverse Polish Notation to receive the computed result. Use the following commands for additional functionality:</p>
 
 <ul>
   <li><code>start</code>: Initialize the calculator.</li>
@@ -101,7 +101,7 @@ cd TS-CLI-Reverse-Polish-Notation-Calculator
 
 <h3>Link to Hosted Application</h3>
 
-<p>(Currently not applicable as this is a CLI utility. Future versions may include Ib-based interfaces.)</p>
+<p>(Currently not applicable as this is a CLI utility. Future versions may include Web-based interfaces.)</p>
 
 <hr>
 
