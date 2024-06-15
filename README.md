@@ -105,7 +105,7 @@ cd TS-CLI-Reverse-Polish-Notation-Calculator
 
 <hr>
 
-<p><strong>Repository:</strong> <a href="https:/g/ithub.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator/">https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator</a></p>
+<p><strong>Repository:</strong> <a href="https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator/">https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator</a></p>
 
 <p><strong>Author:</strong> Chelsea Snider</p>
 
