@@ -1,23 +1,19 @@
-import { userInput, inputCommands } from "./index";
+import { userInput } from "./index";
+import { appTitle, borderArt } from "./messages";
 import { isOperator, operatorFunctions } from './operations';
 
 // Stacks numbers into the passed stack array and performs the calculation.
-// The token array must be validated before.
+// The token array must be validated.
 // Return the stack.
 // param {number[]} stack
 // param {string[]} tokenArr
 // returns {number[]}
 
-export default async function calculate(
+export async function calculate(
     stack: number[] = [],
     tokenArr: string[] = []
 ): Promise<number> {
-    console.log(
-        'Reverse Polish Notation Calculator \n' +
-        '---------------------------------- \n' +
-        'Please enter a mathematical expression in Reverse Polish Notation format'
-    );
-
+   
     if (tokenArr.length === 0) {
         const input = await userInput('\n' + 'input: ');
         tokenArr = input.split(" ").filter(item => item.trim() !== "");
@@ -62,6 +58,7 @@ export default async function calculate(
                 const lastNumber = stack.pop();
                 const secondLastNumber = stack.pop();
                 const result = operatorFunctions['+'](secondLastNumber || 0, lastNumber || 0);
+                console.log(`\n`)
                 stack.push(result);
                 }
                 } else {
