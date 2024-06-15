@@ -30,7 +30,7 @@ By Chelsea Snider
 <ul>
   <li><strong>Command-Line Interface:</strong> I chose a CLI utility as our initial interface to cater to users familiar with UNIX-like environments, providing a straightforward and efficient user experience.</li>
   <li><strong>Node.js:</strong> The application is built using Node.js due to its asynchronous nature, ease of handling I/O operations, and wide adoption in the development community.</li>
-  <li><strong>Readline Module:</strong> We utilize Node.js's <code>readline</code> module to handle user input efficiently, making the application interactive and responsive.</li>
+  <li><strong>Readline Module:</strong> I utilized Node.js's <code>readline</code> module to handle user input efficiently, making the application interactive and responsive.</li>
 </ul>
 
 <h3>Trade-offs and Future Enhancements</h3>
@@ -85,7 +85,7 @@ cd rpn-calculator
 
 <h2>Future Enhancements</h2>
 
-<p>We plan to introduce the following features in future updates:</p>
+<p>I plan to introduce the following features in future updates:</p>
 
 <ul>
   <li><strong>Additional Operators:</strong> Support for more complex mathematical functions.</li>
