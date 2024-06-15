@@ -1,5 +1,4 @@
 import { userInput } from "./index";
-import { appTitle, borderArt } from "./messages";
 import { isOperator, operatorFunctions } from './operations';
 
 // Stacks numbers into the passed stack array and performs the calculation.
