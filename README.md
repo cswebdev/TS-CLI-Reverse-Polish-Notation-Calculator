@@ -54,8 +54,8 @@ By Chelsea Snider
 
 <ol>
   <li><strong>Clone the Repository</strong>
-    <pre><code>git clone https://github.com/yourusername/rpn-calculator.git
-cd rpn-calculator
+    <pre><code>git clone https://cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator.git
+cd TS-CLI-Reverse-Polish-Notation-Calculator
     </code></pre>
   </li>
   <li><strong>Install Dependencies</strong>
@@ -105,7 +105,7 @@ cd rpn-calculator
 
 <hr>
 
-<p><strong>Repository:</strong> <a href="https://https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator/">https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator</a></p>
+<p><strong>Repository:</strong> <a href="https:/g/ithub.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator/">https://github.com/cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator</a></p>
 
 <p><strong>Author:</strong> Chelsea Snider</p>
 
