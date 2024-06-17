@@ -57,6 +57,10 @@ By Chelsea Snider
     <pre><code>git clone git@github.com:cswebdev/TS-CLI-Reverse-Polish-Notation-Calculator.git
     </code></pre>
   </li>
+  <li><strong>Move into the Directory</strong>
+    <pre><code>cd TS-CLI-Reverse-Polish-Notation-Calculator
+    </code></pre>
+  </li>
   <li><strong>Install Dependencies</strong>
     <pre><code>npm install
     </code></pre>
