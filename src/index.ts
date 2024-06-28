@@ -1,8 +1,7 @@
 import * as readline from 'readline';
-import {calculate} from './RPNCalculator';
+import { calculate } from './RPNCalculator';
 import { clear } from 'console';
-import {appTitle, borderArt, helpMenuTable, newProblemTable, welcomeMessage  } from './messages';
-
+import { appTitle, borderArt, helpMenuTable, newProblemTable, welcomeMessage } from './messages';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -25,10 +24,10 @@ async function loadingAnimation(
     text = "",
     chars = ["⠙", "⠘", "⠰", "⠴", "⠤", "⠦", "⠆", "⠃", "⠋", "⠉"],
     delay = 100
-){
+) {
     let x = 0;
 
-    return setInterval(function() {
+    return setInterval(function () {
         process.stdout.write("\r" + chars[x++] + " " + text);
         x = x % chars.length;
     }, delay)
@@ -47,14 +46,13 @@ const inputCommands: Commands = {
     'b': handleBack,
     'back': handleBack,
     'start': startCalculator,
-    'clear':  handleClear,
+    'clear': handleClear,
 };
 
-
-async function handleClear(): Promise<boolean>{
+async function handleClear(): Promise<boolean> {
     const animation = await loadingAnimation('Clearing...', undefined, 100);
 
-    await new Promise(resolve => setTimeout(resolve, 1000)); 
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     clearInterval(animation);
     console.clear();
@@ -72,43 +70,43 @@ export async function handleQuit(input: string): Promise<boolean> {
         console.log('Shutting down.');
         rl.close();
         return true;
-    } else { 
+    } else {
         return false;
     }
 }
-    
+
 export async function handleBack(input: string): Promise<boolean> {
     const animation = await loadingAnimation('Returning...', undefined, 100);
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); 
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     clearInterval(animation);
     clear();
-        await main();
-        return true
+    await main();
+    return true
 }
 
-async function enterNewProblem():Promise<boolean>{
+async function enterNewProblem(): Promise<boolean> {
     console.log(`${newProblemTable}`);
 
     const confirmNewProblem = await userInput("Would you like to solve another problem? \n" +
         "Enter a command, or enter 'yes' \n" +
-        "Enter a command: " 
+        "Enter a command: "
     );
     if (confirmNewProblem.trim().toLowerCase() === 'yes') {
         await startCalculator();
         clear()
         return true;
     } else if (confirmNewProblem === 'no') {
-        return await handleBack(confirmNewProblem)  
+        return await handleBack(confirmNewProblem)
     } else if (confirmNewProblem in inputCommands) {
         return await handleUserInput(confirmNewProblem);
     } else {
         console.log('Invalid command entered');
         await enterNewProblem();
-    } 
-     return false
- }
+    }
+    return false
+}
 
 export async function startCalculator(): Promise<boolean> {
     const stack: number[] = [];
@@ -117,25 +115,25 @@ export async function startCalculator(): Promise<boolean> {
 
     const animation = await loadingAnimation('Starting calculator...', undefined, 100);
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); 
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     clearInterval(animation);
     clear();
 
     console.log(
-        `${appTitle}\n`+
-        `${borderArt}\n\n`+
+        `${appTitle}\n` +
+        `${borderArt}\n\n` +
         'Please enter a mathematical expression in Reverse Polish Notation format\n' +
         'This calculator will not accept standard PEMDAS format expressions\n'
     );
 
-    do {      
+    do {
         input = await userInput('\n' + 'input: ');
 
         if (input.trim().toLowerCase() === 'start') {
             console.log('\nInitial Expression: ', userInput);
             console.log('Initial Stack:', stack);
-            continue; 
+            continue;
         }
 
         if (input in inputCommands) {
@@ -152,7 +150,7 @@ export async function startCalculator(): Promise<boolean> {
             await calculate(stack, tokenArr);
             console.log('Calculation result:', stack[0]);
             await enterNewProblem();
-            return true; 
+            return true;
         } catch (error) {
             console.error('Error occurred during calculation:', error);
         }
@@ -166,23 +164,10 @@ async function mainMenu(): Promise<boolean> {
         const isCommandValid = await handleUserInput(input);
         if (isCommandValid) {
             return true;
-        } else if (input === 'clear') {
-            await handleClear();
-        } else if (input === 'help' || input === 'h') {
-            await handleHelp(input);
         } else if (input === 'start') {
             await startCalculator();
-        } else {
+        } else if (!isCommandValid && (input !== 'clear' && input !== 'help' && input !== 'h')) {
             console.log(`Invalid Command`);
-        }
-    }
-}
-
-export async function calculatorMenu(): Promise<void> {
-    while (true) {
-        const input = await userInput('Enter a mathematical expression: ');
-        if (input.toLowerCase() === 'back') {
-            return;
         }
     }
 }
@@ -202,27 +187,26 @@ async function helpMenu(): Promise<void> {
     }
 }
 
-async function main() {   
+async function main() {
     clear()
-    console.log( 
-    `${appTitle}` +
-    `\n`+
-     `${borderArt}`+ 
-    '\n' +
- `${welcomeMessage}\n` 
+    console.log(
+        `${appTitle}` +
+        `\n` +
+        `${borderArt}` +
+        '\n' +
+        `${welcomeMessage}\n`
     );
     console.log(
         `Basic commands\n\n` +
         `Enter 'start' to initialize the calculator\n` +
         `Enter 'help' for the help menu\n`
     );
-  
+
     while (true) {
         const shouldQuit = await mainMenu();
         if (shouldQuit) {
             break;
         }
-        await helpMenu();
     }
     rl.close();
 }
