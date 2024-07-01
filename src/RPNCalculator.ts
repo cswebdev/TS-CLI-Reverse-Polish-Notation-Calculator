@@ -18,7 +18,7 @@ export async function calculate(
         tokenArr = input.split(" ").filter(item => item.trim() !== "");
     }
 
-    console.log(`\n Initial Expression: ${tokenArr.join(' ')}`);
+    console.log(`Initial Expression: ${tokenArr.join(' ')}`);
 
     for (let i = 0; i < tokenArr.length; i++) {
         const item = tokenArr[i];
@@ -31,7 +31,11 @@ export async function calculate(
                 throw new Error("ERROR: Expression not valid. Expression not in Reverse Polish Notation format");
             }
 
-            console.log(`Performing ${item} operation.`);
+            if (item === '/' && lastNumber === 0 ){
+                throw new Error("ERROR: Cannot divide by 0")
+            }
+
+            console.log(`Performing '${item}' operation.`);
             console.log(`Pop ${lastNumber} and ${secondLastNumber}`);
             
             const result = operatorFunctions[item](secondLastNumber, lastNumber);
@@ -49,8 +53,8 @@ export async function calculate(
             }
         }
         console.log(`Stack: [${stack}]`);
-    }
-
+    }  
+    
     if (stack.length !== 1) {
         if (stack.length > 1) {
             while (stack.length > 1) {
@@ -59,9 +63,9 @@ export async function calculate(
                 const result = operatorFunctions['+'](secondLastNumber || 0, lastNumber || 0);
                 console.log(`\n`)
                 stack.push(result);
-                }
-                } else {
-                    throw new Error("ERROR: Invalid expression: too many numbers left on the stack");
+            }
+        } else {
+            throw new Error("ERROR: Invalid expression: too many numbers left on the stack");
         }
     }
     return stack[0];   

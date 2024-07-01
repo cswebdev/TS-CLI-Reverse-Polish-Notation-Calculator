@@ -51,10 +51,9 @@ const inputCommands: Commands = {
 
 async function handleClear(): Promise<boolean> {
     const animation = await loadingAnimation('Clearing...', undefined, 100);
-
     await new Promise(resolve => setTimeout(resolve, 1000));
-
     clearInterval(animation);
+
     console.clear();
     return false;
 }
@@ -86,26 +85,26 @@ export async function handleBack(input: string): Promise<boolean> {
     return true
 }
 
-async function enterNewProblem(): Promise<boolean> {
-    console.log(`${newProblemTable}`);
+async function enterNewProblem(stack: number[]): Promise<boolean> {
 
-    const confirmNewProblem = await userInput("Would you like to solve another problem? \n" +
-        "Enter a command, or enter 'yes' \n" +
-        "Enter a command: "
-    );
-    if (confirmNewProblem.trim().toLowerCase() === 'yes') {
-        await startCalculator();
-        clear()
-        return true;
-    } else if (confirmNewProblem === 'no') {
-        return await handleBack(confirmNewProblem)
-    } else if (confirmNewProblem in inputCommands) {
+    const confirmNewProblem = await userInput("\n" + "Enter new numbers and operators to update current result \n" +
+        'Or, enter (quit, back, or clear) \n' +
+        'Input new expression or a command \n' +
+        'Input: '
+     );
+
+     if (confirmNewProblem.trim().toLowerCase() === 'yes') {
+        // should allow users to continue updating the stack
+        return false;
+     } else if (confirmNewProblem === 'no') {
+        return await handleBack(confirmNewProblem);
+     } else if (confirmNewProblem in inputCommands) {
         return await handleUserInput(confirmNewProblem);
-    } else {
+     } else {
         console.log('Invalid command entered');
-        await enterNewProblem();
-    }
-    return false
+        await enterNewProblem(stack)
+     }
+     return false;
 }
 
 export async function startCalculator(): Promise<boolean> {
@@ -148,11 +147,15 @@ export async function startCalculator(): Promise<boolean> {
 
         try {
             await calculate(stack, tokenArr);
-            console.log('Calculation result:', stack[0]);
-            await enterNewProblem();
+            console.log('Calculation result: ', stack[0]);
+            const continueCalculating = await enterNewProblem(stack);
+            if (!continueCalculating){
+                continue
+            }
             return true;
-        } catch (error) {
-            console.error('Error occurred during calculation:', error);
+        }
+        catch (error){
+            console.log('Error occurred during calculation: ', error);
         }
     } while (true);
 }
